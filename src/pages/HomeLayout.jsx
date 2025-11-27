@@ -7,7 +7,7 @@ const HomeLayout = () => {
   return (
     <>
       <Nav />
-      <div>
+      <div className="bg-blue-100 h-screen">
         <Outlet />
       </div>
       <Foot />

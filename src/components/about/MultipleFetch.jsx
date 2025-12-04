@@ -1,30 +1,16 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import useFetchPerson from "../hooks/useFetchPerson";
+// import React, { useEffect, useState } from "react";
 
-const MultipleFetch = () => {
-  const [user, setUser] = useState(null);
-  const [isLoading, SetIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+// if (isLoading) return <p>Loading.....</p>;
+// if (isError) return <p>Something went wrong</p>;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("https://api.github.com/users/QuincyLarson");
-        const data = response.data;
-        setUser(data);
-      } catch (error) {
-        console.log(error);
-        setIsError(true);
-      } finally {
-        SetIsLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-  if (isLoading) return <p>Loading.....</p>;
-  if (isError) return <p>Something went wrong</p>;
-
-  return (
+export default function MultipleFetch() {
+  const { user, isLoading, isError } = useFetchPerson();
+  return isLoading ? (
+    <p>Loading.....</p>
+  ) : isError ? (
+    <p>Something went wrong..</p>
+  ) : (
     <div>
       <p>{user.name}</p>
       <p>{user.company}</p>
@@ -32,6 +18,4 @@ const MultipleFetch = () => {
       <p>{user.location}</p>
     </div>
   );
-};
-
-export default MultipleFetch;
+}

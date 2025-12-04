@@ -1,22 +1,12 @@
-import React, { useEffect, useState } from "react";
-
-import axios from "axios";
+import useFetchData from "../hooks/useFetchData";
 
 const UseEffectFetch = () => {
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("https://api.github.com/users");
-        const data = response.data;
-        setUsers(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
-  return (
+  const { users, isLoading, isError } = useFetchData();
+  return isLoading ? (
+    <p>Loading.....</p>
+  ) : isError ? (
+    <p>Something went wrong..</p>
+  ) : (
     <div className="my-5">
       <p>Use effect fetch data</p>
       {users.map((item) => (
